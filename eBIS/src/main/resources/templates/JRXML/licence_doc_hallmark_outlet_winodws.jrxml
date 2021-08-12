@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6fb3a0dd-a3c2-4e82-b0e4-a8306964501c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Table Dataset 1" uuid="c67567ca-5a30-41ad-972c-0b616f2b37c3">
+		<parameter name="cmlno" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="branchid" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="numId" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+a.str_is_no||' : '||a.is_year ||' '||(select str_standard_title from bis_dev.gblt_standard_mst std where std.str_standard_no=a.str_is_no and num_isvalid=1 and nvl(str_filename,'A') not like 'B%')str_is_no,
+a.str_is_no isno,
+decode(a.str_is_no,'IS 1417','Gold Jewellery and Artefacts','IS 2112','Silver Jewellery and Artefacts')Artifacts
+FROM bis_hall.hall_cml_licence_detail a, bis_hall.hall_cml_branch_licence_detail b
+where a.str_cml_no=b.str_cml_no
+and a.num_branch_id=b.num_branch_id
+and a.str_cml_no=$P{cmlno}
+and a.num_branch_id=$P{branchid}
+and b.num_id=$P{numId}]]>
+		</queryString>
+		<field name="str_is_no" class="java.lang.String"/>
+		<field name="isno" class="java.lang.String"/>
+		<field name="artifacts" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="cmlno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="branchid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.dt_operative_date, a.dt_validity_date, a.is_year,
+a.num_branch_id firm_branch_id, 'HM/C-'||a.str_cml_no str_cml_no,
+str_firm_name, a.str_is_no isno,
+a.str_is_no||' : '||a.is_year ||' '||(select str_standard_title from bis_dev.gblt_standard_mst std where std.str_standard_no=a.str_is_no and num_isvalid=1 and nvl(str_filename,'A') not like 'B%')str_is_no,
+num_outlet_no,
+b.num_id,num_fac_country_id,
+initcap((select str_district_name from bis_dev.gblt_district_mst dm where dm.num_district_id=num_fac_district_id))||' '||
+initcap((select str_state_name from bis_dev.gblt_state_mst sm where sm.num_state_id=num_fac_state_id))outlet_dist_state,
+num_fac_pin_code,
+
+num_outlet_branch_id,
+str_fac_address1 ||' '||
+str_fac_address2||' '||
+str_fac_city_name outlet_address,--decode(length(str_fac_city_name),0,(select str_city_name from bis_dev.gblt_city_mst d where d.num_city_id=b.num_city_id) ,str_fac_city_name)
+str_outlet_name,
+'ADDRESS: '||upper((select str_address1 from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id))||
+(select str_address2 from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id)))branch_add,
+(select str_district_name from bis_dev.gblt_district_mst dm where dm.num_district_id=  (select c.num_district_id from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id)))||' '||
+(select str_state_name from bis_dev.gblt_state_mst sm where sm.num_state_id=     (select c.num_state_id from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id)))||' '||
+(select c.num_pincode from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id))branch_dis_state_pin,
+'PHONE: '||(select c.str_branch_contact from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id))branch_contact,
+'FAX: '||(select c.str_branch_fax from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id))branch_fax,
+'E-MAIL: '||(select c.str_branch_mail from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id))branch_email,
+decode(num_outlet_no,1,'Head Branch',2,'Deputy Director General')officer_desig,
+decode(num_outlet_no,1,(select c.str_branc_short_name from bis_dev.gblt_branch_mst c where c.num_branch_id=b.num_outlet_branch_id),2,
+(select str_ro_fullname from bis_dev.gblt_regional_mst rm where rm.num_ro_id=(select c.num_ro_id from bis_dev.gblt_branch_mst c where c.num_branch_id=a.num_branch_id )))branch_name,
+(select c.str_branch_detail from bis_dev.gblt_branch_mst c where c.num_branch_id=decode(num_outlet_no,1,num_outlet_branch_id,2,a.num_branch_id))branch_detail,
+
+'3. This Certificate shall be valid from '||
+initcap(decode(to_number(to_char(a.dt_operative_date,'DD')),1,'First',2,'Second',3,'Third',trim(replace(cash_words(to_char(a.dt_operative_date,'DD')::money),'dollars and zero cents','')))
+||' '||trim(to_char(a.dt_operative_date,'Month'))||' '|| trim(replace(cash_words(to_char(a.dt_operative_date,'YYYY')::money),'dollars and zero cents','')))||' to '||
+initcap(decode(to_number(to_char(a.dt_validity_date,'DD')),1,'First',2,'Second',3,'Third',trim(replace(cash_words(to_char(a.dt_validity_date,'DD')::money),'dollars and zero cents','')))
+||' '||trim(to_char(a.dt_validity_date,'Month'))||' '|| trim(replace(cash_words(to_char(a.dt_validity_date,'YYYY')::money),'dollars and zero cents','')))||
+' and may be renewed in accordance with the said Regulations.' todt,
+
+decode(a.str_is_no,'IS 1417','Gold Jewellery and Artefacts','IS 2112','Silver Jewellery and Artefacts')Artifacts,
+'Signed, Sealed and Dated this '||initcap(decode(to_number(to_char(sysdate,'DD')),1,'First',2,'Second',3,'Third',trim(replace(cash_words(to_char(sysdate,'DD')::money),'dollars and zero cents','')))
+||' '||trim(to_char(sysdate,'Month'))||' '|| trim(replace(cash_words(to_char(sysdate,'YYYY')::money),'dollars and zero cents','')))todaysdate
+,b.num_id as numid
+FROM bis_hall.hall_cml_licence_detail a, bis_hall.hall_cml_branch_licence_detail b
+where a.str_cml_no=b.str_cml_no
+and a.num_branch_id=b.num_branch_id
+and a.str_cml_no=$P{cmlno}
+and a.num_branch_id=$P{branchid}]]>
+	</queryString>
+	<field name="dt_operative_date" class="java.sql.Timestamp"/>
+	<field name="dt_validity_date" class="java.sql.Timestamp"/>
+	<field name="is_year" class="java.lang.String"/>
+	<field name="firm_branch_id" class="java.lang.Integer"/>
+	<field name="str_cml_no" class="java.lang.String"/>
+	<field name="str_firm_name" class="java.lang.String"/>
+	<field name="isno" class="java.lang.String"/>
+	<field name="str_is_no" class="java.lang.String"/>
+	<field name="num_outlet_no" class="java.lang.Integer"/>
+	<field name="num_id" class="java.lang.Integer"/>
+	<field name="num_fac_country_id" class="java.lang.Integer"/>
+	<field name="outlet_dist_state" class="java.lang.String"/>
+	<field name="num_fac_pin_code" class="java.lang.Long"/>
+	<field name="num_outlet_branch_id" class="java.lang.Integer"/>
+	<field name="outlet_address" class="java.lang.String"/>
+	<field name="str_outlet_name" class="java.lang.String"/>
+	<field name="branch_add" class="java.lang.String"/>
+	<field name="branch_dis_state_pin" class="java.lang.String"/>
+	<field name="branch_contact" class="java.lang.String"/>
+	<field name="branch_fax" class="java.lang.String"/>
+	<field name="branch_email" class="java.lang.String"/>
+	<field name="officer_desig" class="java.lang.String"/>
+	<field name="branch_name" class="java.lang.String"/>
+	<field name="branch_detail" class="java.lang.String"/>
+	<field name="todt" class="java.lang.String"/>
+	<field name="artifacts" class="java.lang.String"/>
+	<field name="todaysdate" class="java.lang.String"/>
+	<field name="numid" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<textField>
+				<reportElement x="394" y="0" width="161" height="14" uuid="b89cb589-3758-4d52-a157-a208033cdd42"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_add}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="15" width="161" height="12" uuid="076f6679-d744-4dd0-94f2-e2623473184a"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_dis_state_pin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="27" width="161" height="13" uuid="cf77f5e1-bbe0-4802-bd7a-34a991bdf1c9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="40" width="161" height="17" uuid="84d36735-e59d-4b8d-892c-eddc17432b08"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="57" width="161" height="12" uuid="a364d534-8589-4246-a280-a5bdfabaf0f7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="79" width="216" height="18" uuid="17c2dde0-4a77-4b48-9fb6-8775652dbb79"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_detail}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="394" y="83" width="161" height="13" uuid="b7ee523a-16cf-44aa-89ac-639b76f238f8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Web : https://bis.gov.in/]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="56" y="9" width="417" height="24" uuid="727700a7-4c60-4307-b21c-3cc4a094765e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Certificate of Registration for Selling Articles with Hallmark]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="5" width="555" height="2" uuid="0a4b29d3-d19d-45bc-a3fc-f7cac6653480"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="10" width="74" height="20" uuid="fd97a83e-46ee-4086-9329-a15c04746b0a"/>
+				<text><![CDATA[Certificate No :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="96" y="10" width="212" height="20" uuid="1a6922e6-e328-4765-92fe-61efaf893a46"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{str_cml_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="451" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="8" y="6" width="538" height="32" uuid="23df97df-4cf2-41d1-a2fc-b6a257fe8d32"/>
+				<textElement textAlignment="Justified">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[1. By virtue of the powers conferred on it by the Bureau of Indian Standards Act, 2016 (11 of 2016), the Bureau hereby grants to the certificate granted to]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="8" y="46" width="526" height="20" uuid="ddbd0a1a-0a43-43d1-94bb-aa7251b3773e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{str_outlet_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="66" width="526" height="20" uuid="bc701e81-d910-4012-ad25-32031e5d2d48"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{outlet_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="106" width="100" height="20" uuid="d8f07a31-b1b2-42cf-b250-940890a2c94a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num_fac_pin_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="8" y="144" width="526" height="67" uuid="a5aa2242-d753-4b44-9603-b117b3fafe14"/>
+				<textElement textAlignment="Justified">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Certificate for using Hallmark set out in the first column of the Schedule here to, upon the article, set out in the second column of the said Schedule, and selling of hallmarked article from the sales outlet to which the Certificate is being granted to. The articles shall be hallmarked only by Assaying and Hallmarking centre recognised by the Bureau of Indian Standards (BIS) after verification of conformity to the Indian Standard as set out in the third column of the said Schedule.]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="8" y="222" width="526" height="85" uuid="976b7e73-99f8-4f16-860e-7b0fcc9c3223"/>
+				<componentElement>
+					<reportElement key="table" x="0" y="0" width="526" height="85" uuid="ef6b0323-5012-4bf9-8fc7-54741d67c18c"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="Table Dataset 1" uuid="8d611871-61d6-4b5a-ac7d-6a41f81e493e">
+							<datasetParameter name="cmlno">
+								<datasetParameterExpression><![CDATA[$P{cmlno}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="branchid">
+								<datasetParameterExpression><![CDATA[$P{branchid}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="numId">
+								<datasetParameterExpression><![CDATA[$F{numid}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="90" uuid="0fa2f7fc-7708-4d37-9b23-937b0f8eb890">
+							<jr:tableHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" uuid="0d89d042-4953-43de-a8d2-028d3650b58d"/>
+									<box>
+										<topPen lineWidth="2.0"/>
+										<leftPen lineWidth="2.0"/>
+										<bottomPen lineWidth="2.0"/>
+										<rightPen lineWidth="2.0"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[Hallmark
+(1)]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:columnHeader height="60" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="60" uuid="910553c8-b44e-4db0-a823-2fcf2b84f371"/>
+									<box>
+										<topPen lineWidth="2.0"/>
+										<leftPen lineWidth="2.0"/>
+										<bottomPen lineWidth="2.0"/>
+										<rightPen lineWidth="2.0"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="0"/>
+							<jr:detailCell style="table_TD" height="0"/>
+						</jr:column>
+						<jr:column width="143" uuid="7534ce73-13ae-47e6-a642-f1520949525e">
+							<jr:tableHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="143" height="30" uuid="f689455b-4ec3-49b6-99f7-27229c2a69fa"/>
+									<box>
+										<topPen lineWidth="2.0"/>
+										<leftPen lineWidth="2.0"/>
+										<bottomPen lineWidth="2.0"/>
+										<rightPen lineWidth="2.0"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[Article
+(2)]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:columnHeader height="60" rowSpan="1">
+								<textField isStretchWithOverflow="true">
+									<reportElement x="0" y="0" width="143" height="60" isPrintWhenDetailOverflows="true" uuid="17fae542-31c9-421d-a34c-4dbbb41eb132"/>
+									<box>
+										<topPen lineWidth="2.0"/>
+										<leftPen lineWidth="2.0"/>
+										<bottomPen lineWidth="2.0"/>
+										<rightPen lineWidth="2.0"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{artifacts}]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="0"/>
+							<jr:detailCell style="table_TD" height="0"/>
+						</jr:column>
+						<jr:column width="274" uuid="82cebb61-f9a2-4e89-af89-b04d93edd4cc">
+							<jr:tableHeader height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="272" height="30" uuid="59ac417c-0d90-49d2-a0bc-aed145dba002"/>
+									<box>
+										<topPen lineWidth="2.0"/>
+										<leftPen lineWidth="2.0"/>
+										<bottomPen lineWidth="2.0"/>
+										<rightPen lineWidth="2.0"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<text><![CDATA[Indian Standards
+(3)]]></text>
+								</staticText>
+							</jr:tableHeader>
+							<jr:columnHeader height="60" rowSpan="1">
+								<textField isStretchWithOverflow="true">
+									<reportElement x="0" y="0" width="272" height="60" isPrintWhenDetailOverflows="true" uuid="41ab0316-fd57-4e6f-b39e-3fe582c36ade"/>
+									<box>
+										<topPen lineWidth="2.0"/>
+										<leftPen lineWidth="2.0"/>
+										<bottomPen lineWidth="2.0"/>
+										<rightPen lineWidth="2.0"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{str_is_no}]]></textFieldExpression>
+								</textField>
+							</jr:columnHeader>
+							<jr:columnFooter style="table_CH" height="0"/>
+							<jr:detailCell style="table_TD" height="0"/>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</frame>
+			<staticText>
+				<reportElement positionType="Float" x="13" y="320" width="537" height="39" uuid="f62fbe98-9485-4f8e-86aa-08c9ebb1f6e8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[2. This Certificate shall operate in accordance with the provisions laid down in Bureau of Indian Standards Act, 2016 Bureau of Indian Standards Rules 2017, Bureau of Indian Standards Hallmarking Regulations, 2018 and guidelines for conformity assessment scheme issued thereunder. ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="13" y="369" width="530" height="40" uuid="7fefc431-2753-4d5f-92e1-cacf48df7113"/>
+				<textFieldExpression><![CDATA[$F{todt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="409" width="530" height="20" uuid="44b0ec66-3597-4d95-8217-1a0c0f34cb73"/>
+				<textFieldExpression><![CDATA[$F{todaysdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="86" width="406" height="20" uuid="d67a3127-72c6-436a-8482-28f9ea9f7662"/>
+				<textFieldExpression><![CDATA[$F{outlet_dist_state}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="363" y="0" width="187" height="20" uuid="f2d8c083-d160-4c50-b700-b49d1dd7ea28"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[for BUREAU OF INDIAN STANDARDS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="40" width="152" height="20" uuid="bc22044f-e15a-4bdb-9790-cbd9660d7764"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{officer_desig}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="60" width="152" height="20" uuid="77a8e3a5-2d2c-42cb-be65-d928f05ad1a0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{branch_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="17" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch"/>
+	</summary>
+</jasperReport>

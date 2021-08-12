@@ -1,0 +1,257 @@
+{"properties": [
+  {
+    "name": "upload.hm.documents.path",
+    "type": "java.lang.String",
+    "description": "A description for 'upload.hm.documents.path'"
+  },
+  {
+    "name": "package.scan",
+    "type": "java.lang.String",
+    "description": "A description for 'package.scan'"
+  },
+  {
+    "name": "datasource.poolsize",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource.poolsize'"
+  },
+  {
+    "name": "datasource.connectiontimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource.connectiontimeout'"
+  },
+  {
+    "name": "primary.datasource.minimumidle",
+    "type": "java.lang.String",
+    "description": "A description for 'primary.datasource.minimumidle'"
+  },
+  {
+    "name": "readonly.datasource.minimumidle",
+    "type": "java.lang.String",
+    "description": "A description for 'readonly.datasource.minimumidle'"
+  },
+  {
+    "name": "datasource.maxlifetime",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource.maxlifetime'"
+  },
+  {
+    "name": "datasource.idletimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource.idletimeout'"
+  },
+  {
+    "name": "datasource.leakdetectionthreshold",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource.leakdetectionthreshold'"
+  },
+  {
+    "name": "datasource.keepalivetime",
+    "type": "java.lang.String",
+    "description": "A description for 'datasource.keepalivetime'"
+  },
+  {
+    "name": "primary.show-sql",
+    "type": "java.lang.String",
+    "description": "A description for 'primary.show-sql'"
+  },
+  {
+    "name": "readonly.show-sql",
+    "type": "java.lang.String",
+    "description": "A description for 'readonly.show-sql'"
+  },
+  {
+    "name": "production.primary.datasource.jdbcurl",
+    "type": "java.lang.String",
+    "description": "A description for 'production.primary.datasource.jdbcurl'"
+  },
+  {
+    "name": "production.primary.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'production.primary.datasource.password'"
+  },
+  {
+    "name": "production.primary.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'production.primary.datasource.username'"
+  },
+  {
+    "name": "uat.primary.datasource.jdbcurl",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.primary.datasource.jdbcurl'"
+  },
+  {
+    "name": "uat.primary.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.primary.datasource.password'"
+  },
+  {
+    "name": "local.primary.datasource.jdbcurl",
+    "type": "java.lang.String",
+    "description": "A description for 'local.primary.datasource.jdbcurl'"
+  },
+  {
+    "name": "uat.primary.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.primary.datasource.username'"
+  },
+  {
+    "name": "local.primary.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'local.primary.datasource.username'"
+  },
+  {
+    "name": "local.primary.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'local.primary.datasource.password'"
+  },
+  {
+    "name": "production.readonly.datasource.jdbcurl",
+    "type": "java.lang.String",
+    "description": "A description for 'production.readonly.datasource.jdbcurl'"
+  },
+  {
+    "name": "production.readonly.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'production.readonly.datasource.username'"
+  },
+  {
+    "name": "production.readonly.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'production.readonly.datasource.password'"
+  },
+  {
+    "name": "uat.readonly.datasource.jdbcurl",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.readonly.datasource.jdbcurl'"
+  },
+  {
+    "name": "uat.readonly.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.readonly.datasource.username'"
+  },
+  {
+    "name": "uat.readonly.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.readonly.datasource.password'"
+  },
+  {
+    "name": "local.readonly.datasource.jdbcurl",
+    "type": "java.lang.String",
+    "description": "A description for 'local.readonly.datasource.jdbcurl'"
+  },
+  {
+    "name": "local.readonly.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'local.readonly.datasource.username'"
+  },
+  {
+    "name": "local.readonly.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'local.readonly.datasource.password'"
+  },
+  {
+    "name": "productionserverport",
+    "type": "java.lang.String",
+    "description": "A description for 'productionserverport'"
+  },
+  {
+    "name": "uatserverport",
+    "type": "java.lang.String",
+    "description": "A description for 'uatserverport'"
+  },
+  {
+    "name": "spring.mail.from.email",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.from.email'"
+  },
+  {
+    "name": "spring.mail.ccmail",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.ccmail'"
+  },
+  {
+    "name": "jrxml.path",
+    "type": "java.lang.String",
+    "description": "A description for 'jrxml.path'"
+  },
+  {
+    "name": "uat.ftp.host",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.ftp.host'"
+  },
+  {
+    "name": "uat.ftp.username",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.ftp.username'"
+  },
+  {
+    "name": "uat.ftp.password",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.ftp.password'"
+  },
+  {
+    "name": "uat.ftp.port",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.ftp.port'"
+  },
+  {
+    "name": "uat.ftp.filepath",
+    "type": "java.lang.String",
+    "description": "A description for 'uat.ftp.filepath'"
+  },
+  {
+    "name": "production.ftp.host",
+    "type": "java.lang.String",
+    "description": "A description for 'production.ftp.host'"
+  },
+  {
+    "name": "production.ftp.username",
+    "type": "java.lang.String",
+    "description": "A description for 'production.ftp.username'"
+  },
+  {
+    "name": "production.ftp.password",
+    "type": "java.lang.String",
+    "description": "A description for 'production.ftp.password'"
+  },
+  {
+    "name": "production.ftp.port",
+    "type": "java.lang.String",
+    "description": "A description for 'production.ftp.port'"
+  },
+  {
+    "name": "production.ftp.filepath",
+    "type": "java.lang.String",
+    "description": "A description for 'production.ftp.filepath'"
+  },
+  {
+    "name": "local.ftp.host",
+    "type": "java.lang.String",
+    "description": "A description for 'local.ftp.host'"
+  },
+  {
+    "name": "local.ftp.password",
+    "type": "java.lang.String",
+    "description": "A description for 'local.ftp.password'"
+  },
+  {
+    "name": "local.ftp.port",
+    "type": "java.lang.String",
+    "description": "A description for 'local.ftp.port'"
+  },
+  {
+    "name": "local.ftp.username",
+    "type": "java.lang.String",
+    "description": "A description for 'local.ftp.username'"
+  },
+  {
+    "name": "local.ftp.filepath",
+    "type": "java.lang.String",
+    "description": "A description for 'local.ftp.filepath'"
+  },
+  {
+    "name": "ftp.seperator",
+    "type": "java.lang.String",
+    "description": "A description for 'ftp.seperator'"
+  }
+]}

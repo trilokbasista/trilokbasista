@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+
+<tiles-definitions>
+<definition name="indexpage" template="/webpage/index.jsp">
+</definition>
+<definition name="UnderMaintainance" template="/webpage/UnderMaintainance.jsp">
+</definition>
+
+	<definition name="eBIS.HomePage.Layout" template="/webpage/TileTemplate/template.jsp">
+		<put-attribute name="header" value="/webpage/TileAttribute/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/webpage/TileAttribute/footer.jsp" />
+	</definition>
+	
+	<definition name="eBIS.HomePage.Body" extends="eBIS.HomePage.Layout">
+	<put-attribute name="body" value="/webpage/TileAttribute/body.jsp" />
+	</definition>
+</tiles-definitions>
